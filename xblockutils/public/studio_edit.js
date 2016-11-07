@@ -48,25 +48,16 @@ function StudioEditableXBlockMixin(runtime, element) {
             $wrapper.removeClass('is-set');
             $resetButton.removeClass('active').addClass('inactive');
         });
-        if (type == 'html' && tinyMceAvailable) {
-            tinyMCE.baseURL = baseUrl + "/js/vendor/tinymce/js/tinymce";
-            $field.tinymce({
-                theme: 'modern',
-                skin: 'studio-tmce4',
-                height: '200px',
-                formats: { code: { inline: 'code' } },
-                codemirror: { path: "" + baseUrl + "/js/vendor" },
-                convert_urls: false,
-                plugins: "link codemirror",
-                menubar: false,
-                statusbar: false,
-                toolbar_items_size: 'small',
-                toolbar: "formatselect | styleselect | bold italic underline forecolor wrapAsCode | bullist numlist outdent indent blockquote | link unlink | code",
-                resize: "both",
-                setup : function(ed) {
-                    ed.on('change', fieldChanged);
-                }
-            });
+        // if (type == 'html' && tinyMceAvailable) {
+        if (type == 'html') {
+            $field.ckeditor = $('.ckeditor').ckeditor(function () {
+                    this.resize('100%', '435');
+                }, {
+                    language: 'fa',
+                    contentsLangDirection: 'rtl',
+                    removePlugins: 'resize',
+                    resize_enabled: false
+                }).editor;
         }
 
         if (type == 'datepicker' && datepickerAvailable) {
@@ -171,3 +162,4 @@ function StudioEditableXBlockMixin(runtime, element) {
         runtime.notify('cancel', {});
     });
 }
+

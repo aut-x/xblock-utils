@@ -53,7 +53,7 @@
                 value="{{field.value|default_if_none:""}}"
               >
             {% elif field.type == "text" or field.type == "html" %}
-              <textarea class="field-data-control" data-field-name="{{field.name}}" id="xb-field-edit-{{field.name}}" rows=10 cols=70>{{field.value}}</textarea>
+              <textarea class="field-data-control ckeditor" data-field-name="{{field.name}}" id="xb-field-edit-{{field.name}}" rows=10 cols=70>{{field.value}}</textarea>
             {% elif field.type == 'set' and field.has_list_values %}
               {% comment %}
                 TODO: If len(list_values) is high, show an alternate editor 
@@ -111,3 +111,4 @@
     </ul>
   </div>
 </div>
+
