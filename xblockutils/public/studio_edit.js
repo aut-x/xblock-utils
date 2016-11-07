@@ -3,7 +3,7 @@ function StudioEditableXBlockMixin(runtime, element) {
     "use strict";
     
     var fields = [];
-    var tinyMceAvailable = (typeof $.fn.tinymce !== 'undefined'); // Studio includes a copy of tinyMCE and its jQuery plugin
+    var ckeditorAvailable = (typeof $.fn.ckeditor !== 'undefined'); // Studio includes a copy of CKEditor and its jQuery plugin
     var datepickerAvailable = (typeof $.fn.datepicker !== 'undefined'); // Studio includes datepicker jQuery plugin
 
     $(element).find('.field-data-control').each(function() {
@@ -14,7 +14,7 @@ function StudioEditableXBlockMixin(runtime, element) {
         fields.push({
             name: $wrapper.data('field-name'),
             isSet: function() { return $wrapper.hasClass('is-set'); },
-            hasEditor: function() { return tinyMceAvailable && $field.tinymce(); },
+            hasEditor: function() { return ckeditorAvailable && $field.ckeditor(); },
             val: function() {
                 var val = $field.val();
                 // Cast values to the appropriate type so that we send nice clean JSON over the wire:
@@ -34,7 +34,7 @@ function StudioEditableXBlockMixin(runtime, element) {
                 return val;
             },
             removeEditor: function() {
-                $field.tinymce().remove();
+                $field.ckeditor().remove();
             }
         });
         var fieldChanged = function() {
@@ -48,8 +48,7 @@ function StudioEditableXBlockMixin(runtime, element) {
             $wrapper.removeClass('is-set');
             $resetButton.removeClass('active').addClass('inactive');
         });
-        // if (type == 'html' && tinyMceAvailable) {
-        if (type == 'html') {
+        if (type == 'html' && ckeditorAvailable) {
             $field.ckeditor = $('.ckeditor').ckeditor(function () {
                     this.resize('100%', '435');
                 }, {
@@ -140,7 +139,7 @@ function StudioEditableXBlockMixin(runtime, element) {
             } else {
                 notSet.push(field.name);
             }
-            // Remove TinyMCE instances to make sure jQuery does not try to access stale instances
+            // Remove CKEditor instances to make sure jQuery does not try to access stale instances
             // when loading editor for another block:
             if (field.hasEditor()) {
                 field.removeEditor();
@@ -150,7 +149,7 @@ function StudioEditableXBlockMixin(runtime, element) {
     });
 
     $(element).find('.cancel-button').bind('click', function(e) {
-        // Remove TinyMCE instances to make sure jQuery does not try to access stale instances
+        // Remove CKEditor instances to make sure jQuery does not try to access stale instances
         // when loading editor for another block:
         for (var i in fields) {
             var field = fields[i];
