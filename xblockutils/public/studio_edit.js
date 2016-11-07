@@ -14,7 +14,7 @@ function StudioEditableXBlockMixin(runtime, element) {
         fields.push({
             name: $wrapper.data('field-name'),
             isSet: function() { return $wrapper.hasClass('is-set'); },
-            hasEditor: function() { return ckeditorAvailable && $field.ckeditor(); },
+            hasEditor: function() { return ckeditorAvailable && $field.ckeditor; },
             val: function() {
                 var val = $field.val();
                 // Cast values to the appropriate type so that we send nice clean JSON over the wire:
@@ -34,7 +34,9 @@ function StudioEditableXBlockMixin(runtime, element) {
                 return val;
             },
             removeEditor: function() {
-                $field.ckeditor().remove();
+                var editorID = $field.attr("id");
+                var instance = CKEDITOR.instances[editorID];
+                if (instance) { instance.destroy(true); }
             }
         });
         var fieldChanged = function() {
@@ -56,7 +58,7 @@ function StudioEditableXBlockMixin(runtime, element) {
                     contentsLangDirection: 'rtl',
                     removePlugins: 'resize',
                     resize_enabled: false
-                }).editor;
+                });
         }
 
         if (type == 'datepicker' && datepickerAvailable) {
