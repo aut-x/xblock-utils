@@ -1,7 +1,7 @@
 /* Javascript for StudioEditableXBlockMixin. */
 function StudioEditableXBlockMixin(runtime, element) {
     "use strict";
-    
+
     var fields = [];
     var ckeditorAvailable = (typeof $.fn.ckeditor !== 'undefined'); // Studio includes a copy of CKEditor and its jQuery plugin
     var datepickerAvailable = (typeof $.fn.datepicker !== 'undefined'); // Studio includes datepicker jQuery plugin
@@ -58,7 +58,15 @@ function StudioEditableXBlockMixin(runtime, element) {
                     contentsLangDirection: 'rtl',
                     removePlugins: 'resize',
                     resize_enabled: false
-                });
+                }).editor;
+
+            var isEditorFieldChanged = false;
+            $field.ckeditor.on('change', function() {
+                if(!isEditorFieldChanged) {
+                    fieldChanged();
+                    isEditorFieldChanged = true;
+                }
+            });
         }
 
         if (type == 'datepicker' && datepickerAvailable) {
