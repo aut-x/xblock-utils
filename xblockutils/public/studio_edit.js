@@ -57,7 +57,8 @@ function StudioEditableXBlockMixin(runtime, element) {
                     language: 'fa',
                     contentsLangDirection: 'rtl',
                     removePlugins: 'resize',
-                    resize_enabled: false
+                    resize_enabled: false,
+                    enterMode: CKEDITOR.ENTER_BR
                 }).editor;
 
             var isEditorFieldChanged = false;
