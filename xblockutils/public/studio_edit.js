@@ -53,12 +53,6 @@ function StudioEditableXBlockMixin(runtime, element) {
         if (type == 'html' && ckeditorAvailable) {
             $field.ckeditor = $('.ckeditor').ckeditor(function () {
                     this.resize('100%', '435');
-                }, {
-                    language: 'fa',
-                    contentsLangDirection: 'rtl',
-                    removePlugins: 'resize',
-                    resize_enabled: false,
-                    enterMode: CKEDITOR.ENTER_BR
                 }).editor;
 
             var isEditorFieldChanged = false;
