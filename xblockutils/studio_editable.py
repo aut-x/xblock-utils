@@ -134,6 +134,8 @@ class StudioEditableXBlockMixin(object):
                 if type_class is String and editor_type:
                     if editor_type == "html":
                         info['type'] = 'html'
+                    elif editor_type == "single-line-html":
+                        info['type'] = "single-line-html"
                     else:
                         info['type'] = 'text'
                 if type_class is List and field.runtime_options.get('list_style') == "set":

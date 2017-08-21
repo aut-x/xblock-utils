@@ -4,3 +4,4 @@
 cover
 xblock_utils.egg-info
 tests.integration.*.png
+.idea

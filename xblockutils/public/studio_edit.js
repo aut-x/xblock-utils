@@ -50,10 +50,22 @@ function StudioEditableXBlockMixin(runtime, element) {
             $wrapper.removeClass('is-set');
             $resetButton.removeClass('active').addClass('inactive');
         });
-        if (type == 'html' && ckeditorAvailable) {
-            $field.ckeditor = $('.ckeditor').ckeditor(function () {
-                    this.resize('100%', '435');
-                }).editor;
+        if (type === 'html' && ckeditorAvailable) {
+            $field.ckeditor = $('.ckeditor').ckeditor({
+                toolbarGroups: [
+                    {name: 'clipboard'},
+                    {name: 'basicstyles'},
+                    {name: 'paragraph'},
+                    {name: 'links'},
+                    {name: 'insert'},
+                    {name: 'colors'},
+                    {name: 'styles'},
+                ],
+                width: '100%',
+                height: '200px',
+                resize_enabled: false,
+                removePlugins: 'elementspath',
+            }).editor;
 
             var isEditorFieldChanged = false;
             $field.ckeditor.on('change', function() {
@@ -64,7 +76,27 @@ function StudioEditableXBlockMixin(runtime, element) {
             });
         }
 
-        if (type == 'datepicker' && datepickerAvailable) {
+        if (type === 'single-line-html' && ckeditorAvailable){
+            $field.ckeditor = $('.single-line-ckeditor').ckeditor({
+                toolbarGroups: [
+                    {name: 'basicstyles'},
+                ],
+                width: '100%',
+                height: '50px',
+                resize_enabled: false,
+                removePlugins: 'elementspath',
+            }).editor;
+
+            var isSingleLineEditorFieldChanged = false;
+            $field.ckeditor.on('change', function() {
+                if(!isSingleLineEditorFieldChanged) {
+                    fieldChanged();
+                    isSingleLineEditorFieldChanged = true;
+                }
+            });
+        }
+
+        if (type === 'datepicker' && datepickerAvailable) {
             $field.datepicker('destroy');
             $field.datepicker({dateFormat: "m/d/yy"});
         }
